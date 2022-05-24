@@ -66,7 +66,7 @@ class CourseDetailsModel extends ChangeNotifier {
     access_token = prefs.getString("access_token")!;
     try {
       http.Response response = await http.get(
-        Uri.parse("$apiUrl/categories/${int.parse(catId!)}/courses"),
+        Uri.parse("$apiUrl/courses/${int.parse(id!)}"),
         headers: <String, String>{
           'Authorization': 'Bearer $access_token',
           'Content-Type': 'application/json; char=UTF-8',
@@ -77,13 +77,13 @@ class CourseDetailsModel extends ChangeNotifier {
       print(body["message"]);
       print(status);
       if (status == true) {
-        id = body['data']['Courses'][0]["id"].toString();
-        course_name = body['data']['Courses'][0]['course_name'].toString();
-        course_level = body['data']['Courses'][0]['course_level'].toString();
-        category_name = body['data']['category_name'].toString();
-        admin_name =
-            body['data']['Courses'][0]['Admin']["admin_name"].toString();
-        admin_email = body['data']['Courses'][0]['Admin']["email"].toString();
+        id = body['data']["id"].toString();
+        course_name = body['data']['course_name'].toString();
+        course_level = body['data']['course_level'].toString();
+        category_name = body['data']["Category"]['category_name'].toString();
+        catId = body['data']["Category"]['id'].toString();
+        admin_name = body['data']['Admin']["admin_name"].toString();
+        admin_email = body['data']['Admin']["email"].toString();
       }
 
       notifyListeners();

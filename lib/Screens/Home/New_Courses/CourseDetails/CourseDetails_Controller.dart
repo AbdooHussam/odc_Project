@@ -26,7 +26,7 @@ class CourseDetailsCard extends StatelessWidget {
     var cDetails = Provider.of<CourseDetailsModel>(context);
     return InkWell(
       onTap: () async {
-        cDetails.catId = catId;
+        cDetails.id = id;
         await cDetails.getCoursesDetails();
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => CourseDetailsScreen()));

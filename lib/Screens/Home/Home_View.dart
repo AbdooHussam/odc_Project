@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
               TextButton(
                   onPressed: () {
                     categ.categList.clear();
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const CategoriesScreen()));
@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
               TextButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => NewCoursesScreen()));
@@ -188,6 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: cours.coursList,
                   ),
                 ),
+          SizedBox(height: 30),
         ]),
       ),
     );

@@ -4,14 +4,18 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Home_Controler.dart';
+import '../New_Courses/CourseDetails/CourseDetails_Controller.dart';
+import '../New_Courses/Courses_Controller.dart';
 
 class CategoriesModel extends ChangeNotifier {
   String? access_token, refresh_token;
   String apiUrl = "https://5742-196-205-94-85.eu.ngrok.io/api/v1";
+  String catId="",category_name="";
 
   late bool status;
 
   List<CategoriesCard> categList = [];
+  List<AllCoursesCard> catDetails = [];
 
   getCategories({bool allCat = false}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -30,7 +34,7 @@ class CategoriesModel extends ChangeNotifier {
         },
       );
       var body = json.decode(response.body);
-      if (allCat==true) {
+      if (allCat == true) {
         lenth = body['data'].length;
       } else {
         if (body['data'].length > 3) {
@@ -55,6 +59,53 @@ class CategoriesModel extends ChangeNotifier {
     } catch (e) {
       print("$e getCategories *************************");
       refreshToken();
+    }
+  }
+
+  getCategoriesDetails() async {
+    String course_name, id,catId2, admin_name;
+    catId2=catId;
+    int lenth = 0;
+    bool status;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    access_token = prefs.getString("access_token")!;
+    try {
+      http.Response response = await http.get(
+        Uri.parse("$apiUrl/categories/${int.parse(catId!)}/courses"),
+        headers: <String, String>{
+          'Authorization': 'Bearer $access_token',
+          'Content-Type': 'application/json; char=UTF-8',
+        },
+      );
+      var body = json.decode(response.body);
+      status = await body["success"];
+      print(body["message"]);
+      print(status);
+      if (status == true) {
+        lenth = body['data']['Courses'].length;
+        for (int i = 0; i < lenth; i++) {
+          id = body['data']['Courses'][i]["id"].toString();
+          course_name = body['data']['Courses'][i]['course_name'].toString();
+          // course_level = body['data']['Courses'][0]['course_level'].toString();
+          category_name = body['data']['category_name'].toString();
+          admin_name =
+              body['data']['Courses'][i]['Admin']["admin_name"].toString();
+          //admin_email = body['data']['Courses'][0]['Admin']["email"].toString();
+
+          catDetails.add(AllCoursesCard(
+            id: id,
+            course_name: course_name,
+            category_name: category_name,
+            admin_name: admin_name,
+            catId: catId2,
+          ));
+        }
+      }
+
+      notifyListeners();
+    } catch (e) {
+      print("$e getCourses ***************");
+      //refreshToken();
     }
   }
 

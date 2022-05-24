@@ -3,6 +3,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import '../Home_Model.dart';
 import '../Home_View.dart';
+import '../NavBar_Screen.dart';
 
 class NewCoursesScreen extends StatefulWidget {
   @override
@@ -35,7 +36,7 @@ class _NewCoursesScreenState extends State<NewCoursesScreen> {
         getCourses.allCoursesCard.clear();
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
+            MaterialPageRoute(builder: (BuildContext context) => Nav_Home()),
             ModalRoute.withName('/'));
         return true;
       },
@@ -56,7 +57,7 @@ class _NewCoursesScreenState extends State<NewCoursesScreen> {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => HomeScreen()),
+                          builder: (BuildContext context) => Nav_Home()),
                       ModalRoute.withName('/'));
                   // Navigator.pushReplacement(context,
                   //     MaterialPageRoute(builder: (context) => HomeScreen()));

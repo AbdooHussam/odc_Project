@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odc/Screens/Home/Home_View.dart';
+import 'package:odc/Screens/Home/NavBar_Screen.dart';
 import 'package:odc/SplashScreen.dart';
 import 'package:provider/provider.dart';
 import 'Provider/userInformation.dart';
@@ -26,7 +27,7 @@ class Home extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
         theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-          home: SplashPage(),
+          home: Nav_Home(),
         ),
     )
     ;

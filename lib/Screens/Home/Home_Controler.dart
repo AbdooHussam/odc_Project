@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'Categories/Categories_Model.dart';
+import 'Categories/allCategoriesDetails/allCatDetails_View.dart';
 import 'New_Courses/CourseDetails/CourseDetails_Model.dart';
 import 'New_Courses/CourseDetails/CourseDetails_View.dart';
 
@@ -20,17 +22,24 @@ class CategoriesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          right: (10 / 375.0) * MediaQuery.of(context).size.width),
-      child: SizedBox(
-        width: (75 / 350) * MediaQuery.of(context).size.width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {},
-              child: SizedBox(
+    var getCat = Provider.of<CategoriesModel>(context);
+    return InkWell(
+      onTap: ()async {
+        getCat.catId = catId;
+         await getCat.getCategoriesDetails();
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AllCatDetails()));
+
+      },
+      child: Padding(
+        padding: EdgeInsets.only(
+            right: (10 / 375.0) * MediaQuery.of(context).size.width),
+        child: SizedBox(
+          width: (75 / 350) * MediaQuery.of(context).size.width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
                 width: (70 / 350) * MediaQuery.of(context).size.width,
                 height: (70 / 700) * MediaQuery.of(context).size.height,
                 child: Card(
@@ -48,17 +57,17 @@ class CategoriesCard extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: (7 / 700) * MediaQuery.of(context).size.height,
-            ),
-            AutoSizeText(name,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black)),
-          ],
+              SizedBox(
+                height: (7 / 700) * MediaQuery.of(context).size.height,
+              ),
+              AutoSizeText(name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black)),
+            ],
+          ),
         ),
       ),
     );
@@ -84,10 +93,12 @@ class CoursesCards extends StatelessWidget {
     var cDetails = Provider.of<CourseDetailsModel>(context);
     return InkWell(
       onTap: () async {
-        cDetails.catId = catId;
+        cDetails.id = id;
         await cDetails.getCoursesDetails();
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const CourseDetailsScreen()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const CourseDetailsScreen()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.52,
@@ -96,8 +107,8 @@ class CoursesCards extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: MediaQuery.of(context).size.width * 0.52,
-              height: (60 / 375.0) * MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width * 0.47,
+              height: (49 / 375.0) * MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: const DecorationImage(
@@ -121,7 +132,8 @@ class CoursesCards extends StatelessWidget {
               children: [
                 AutoSizeText(
                   admin_name,
-                  style: const TextStyle(color: Color(0xFF979797), fontSize: 12),
+                  style:
+                      const TextStyle(color: Color(0xFF979797), fontSize: 12),
                 ),
                 const SizedBox(width: 7),
                 const Icon(

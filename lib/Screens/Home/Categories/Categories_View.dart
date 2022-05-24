@@ -4,6 +4,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:odc/Screens/Home/Home_View.dart';
 import 'package:provider/provider.dart';
 
+import '../NavBar_Screen.dart';
 import 'Categories_Model.dart';
 
 class CategoriesScreen extends StatefulWidget {
@@ -41,7 +42,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         categ.categList.clear();
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
+            MaterialPageRoute(builder: (BuildContext context) => Nav_Home()),
             ModalRoute.withName('/'));
         return true ;
       },
@@ -62,7 +63,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) => HomeScreen()),
+                        builder: (BuildContext context) => Nav_Home()),
                     ModalRoute.withName('/'));
                 // Navigator.pushReplacement(context,
                 //     MaterialPageRoute(builder: (context) => HomeScreen()));
