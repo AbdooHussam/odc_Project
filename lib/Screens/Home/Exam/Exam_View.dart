@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:odc/Screens/Home/Exam/Exam_Model.dart';
 import 'package:provider/provider.dart';
 
+import 'Interview_course result/HrInterview_View.dart';
+
 class ExamScreen extends StatefulWidget {
   const ExamScreen({Key? key}) : super(key: key);
 
@@ -98,12 +100,18 @@ class _ExamScreenState extends State<ExamScreen> {
                         : getExam.examCard[getExam.currentQuestion]
                     : Center(
                         child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           print(getExam.userAnswer);
                           print(getExam.courseCode);
-                          getExam.submitExam();
+                          await getExam.submitExam();
+                          if (getExam.status) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HrInterView()));
+                          }
                         },
-                        child: Text(
+                        child: const Text(
                           "Send Answers",
                           style: TextStyle(
                               fontSize: 16,
@@ -112,8 +120,8 @@ class _ExamScreenState extends State<ExamScreen> {
                         ),
                         style: ElevatedButton.styleFrom(
                             elevation: 15,
-                            primary: Color(0xFFFF6600),
-                            minimumSize: Size(150, 43),
+                            primary: const Color(0xFFFF6600),
+                            minimumSize: const Size(150, 43),
                             // onPrimary: Colors.black,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),

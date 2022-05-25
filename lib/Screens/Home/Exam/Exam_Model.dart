@@ -29,12 +29,13 @@ class ExamModel extends ChangeNotifier {
   Object? radioValue = 0;
 
   String message_subExam = "", subMark = "", subStatus = "";
+  late bool status;
 
   nextQuestion() {
-    print("${currentQuestion +1}**********************");
+    print("${currentQuestion + 1}**********************");
     print("${examCard.length}******************");
     print("${userAnswer.length}******************#########");
-    if (currentQuestion +1 == examCard.length) {
+    if (currentQuestion + 1 == examCard.length) {
       nextQ = false;
       radioValue = 0;
       //submitExam();
@@ -108,44 +109,40 @@ class ExamModel extends ChangeNotifier {
   submitExam() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     access_token = prefs.getString("access_token")!;
-
-    try {
-      http.Response response = await http.post(
-        Uri.parse("$apiUrl/exams/${int.parse(courseCode)}/submit"),
-        headers: <String, String>{
-          'Authorization': 'Bearer $access_token',
-          'Content-Type': 'application/json; char=UTF-8',
+    http.Response response = await http.post(
+      Uri.parse("$apiUrl/exams/${int.parse(courseCode)}/submit"),
+      headers: <String, String>{
+        'Authorization': 'Bearer $access_token',
+        'Content-Type': 'application/json; char=UTF-8',
+      },
+      body: json.encode(
+        {
+          'answers': userAnswer,
         },
-        body: jsonEncode(
-          {
-            'answers': userAnswer,
-          },
-        ),
-      );
+      ),
+    );
 
-      var body = jsonDecode(response.body);
+    var body = json.decode(response.body);
 
-      message_subExam = body["message"];
-      subStatus = body["data"]["status"];
-      subMark = body["data"]["userMark"];
+    message_subExam = body["message"].toString();
+    status = body["success"];
+    subStatus = body["data"]["status"].toString();
+    subMark = body["data"]["userMark"].toString();
 
-      Fluttertoast.showToast(
-        msg: message_subExam,
-        fontSize: 15,
-        toastLength: Toast.LENGTH_SHORT,
-        timeInSecForIosWeb: 10,
-      );
+    Fluttertoast.showToast(
+      msg: message_subExam,
+      fontSize: 15,
+      toastLength: Toast.LENGTH_SHORT,
+      timeInSecForIosWeb: 10,
+    );
+    print(body);
+    notifyListeners();
+
+    if (response.statusCode == 200) {
+      print('Success =200 login ********************');
       print(body);
-      notifyListeners();
-
-      if (response.statusCode == 200) {
-        print('Success =200 login ********************');
-        print(body);
-      } else {
-        print('failed == 400 login ******************');
-      }
-    } catch (e) {
-      print(e);
+    } else {
+      print('failed == 400 login ******************');
     }
   }
 
