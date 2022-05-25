@@ -29,10 +29,14 @@ class AllCoursesCard extends StatelessWidget {
       margin: const EdgeInsets.only(left: 15, right: 15, bottom: 5),
       child: InkWell(
         onTap: () async {
-          cDetails.id = id;
+          cDetails.courseId = id;
           await cDetails.getCoursesDetails();
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CourseDetailsScreen()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CourseDetailsScreen(
+                        courseId: id,
+                      )));
         },
         child: Column(
           children: [

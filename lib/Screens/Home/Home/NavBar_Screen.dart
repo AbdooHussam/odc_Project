@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:odc/Screens/Authentication/Login/Login_View.dart';
 import 'package:odc/Screens/Authentication/SignUp/signUp_View.dart';
-import 'package:odc/Screens/Home/Home_View.dart';
+import 'package:odc/Screens/Home/Home/Home_View.dart';
 import 'package:provider/provider.dart';
 
 class Nav_Home extends StatefulWidget {

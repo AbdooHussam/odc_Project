@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:odc/Provider/userInformation.dart';
+import 'package:odc/Screens/Home/Courses/Courses_Controller.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../Provider/userInformation.dart';
 import 'Home_Controler.dart';
-import 'New_Courses/Courses_Controller.dart';
 
 class HomeModel extends ChangeNotifier {
   String? access_token, refresh_token;
-  String apiUrl = "https://5742-196-205-94-85.eu.ngrok.io/api/v1";
+  var apiUrl =UserInformation().apiUrl;
+  //String apiUrl = "https://5742-196-205-94-85.eu.ngrok.io/api/v1";
 
   late bool status;
 

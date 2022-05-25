@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:odc/Provider/userInformation.dart';
+import 'package:odc/Screens/Home/Courses/Courses_Controller.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Home_Controler.dart';
-import '../New_Courses/CourseDetails/CourseDetails_Controller.dart';
-import '../New_Courses/Courses_Controller.dart';
+import '../Home/Home_Controler.dart';
 
 class CategoriesModel extends ChangeNotifier {
   String? access_token, refresh_token;
-  String apiUrl = "https://5742-196-205-94-85.eu.ngrok.io/api/v1";
+  var apiUrl =UserInformation().apiUrl;
+
+  //String apiUrl = "https://5742-196-205-94-85.eu.ngrok.io/api/v1";
   String catId="",category_name="";
 
   late bool status;
@@ -71,7 +73,7 @@ class CategoriesModel extends ChangeNotifier {
     access_token = prefs.getString("access_token")!;
     try {
       http.Response response = await http.get(
-        Uri.parse("$apiUrl/categories/${int.parse(catId!)}/courses"),
+        Uri.parse("$apiUrl/categories/${int.parse(catId)}/courses"),
         headers: <String, String>{
           'Authorization': 'Bearer $access_token',
           'Content-Type': 'application/json; char=UTF-8',

@@ -1,10 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:odc/Screens/Home/Home_View.dart';
 import 'package:provider/provider.dart';
 
-import '../NavBar_Screen.dart';
+import '../Home/NavBar_Screen.dart';
 import 'Categories_Model.dart';
 
 class CategoriesScreen extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:odc/Screens/Home/Home_View.dart';
+import 'package:odc/Screens/Home/Home/NavBar_Screen.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../Provider/userInformation.dart';
@@ -344,7 +344,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => HomeScreen()));
+                                          builder: (context) => Nav_Home()));
                                 }
                                 showSpinner = false;
                               }

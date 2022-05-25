@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:odc/Screens/Home/New_Courses/CourseDetails/CourseDetails_Model.dart';
-import 'package:odc/Screens/Home/New_Courses/CourseDetails/CourseDetails_View.dart';
+import 'package:odc/Screens/Home/Courses/CourseDetails/CourseDetails_Model.dart';
+import 'package:odc/Screens/Home/Courses/CourseDetails/CourseDetails_View.dart';
 import 'package:provider/provider.dart';
 
 class CourseDetailsCard extends StatelessWidget {
@@ -26,10 +26,10 @@ class CourseDetailsCard extends StatelessWidget {
     var cDetails = Provider.of<CourseDetailsModel>(context);
     return InkWell(
       onTap: () async {
-        cDetails.id = id;
+        cDetails.courseId = id;
         await cDetails.getCoursesDetails();
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => CourseDetailsScreen()));
+            MaterialPageRoute(builder: (context) => CourseDetailsScreen(courseId: id,)));
       },
       child: Container(
         height: MediaQuery.of(context).size.height * .13,

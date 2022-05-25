@@ -13,12 +13,12 @@ class UserInformation extends ChangeNotifier {
 
   String? access_token, refresh_token;
   late bool status_reg;
-  String apiUrl = "https://5742-196-205-94-85.eu.ngrok.io/api/v1";
+  String apiUrl = "https://d67c-196-205-94-85.eu.ngrok.io/api/v1";
 
   register() async {
    // String url = 'https://be03-196-205-94-85.eu.ngrok.io/api/v1/register';
     http.Response response = await http.post(
-      Uri.parse("$apiUrl/register"),
+      Uri.parse("$apiUrl/registernew"),
       headers: <String, String>{
         'Content-Type': 'application/json; char=UTF-8',
       },

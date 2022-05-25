@@ -1,12 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:odc/Screens/Home/Categories/Categories_Model.dart';
+import 'package:odc/Screens/Home/Categories/Categories_View.dart';
+import 'package:odc/Screens/Home/Courses/Courses_View.dart';
+import 'package:odc/Screens/Home/Exam/Exam_Model.dart';
+import 'package:odc/Screens/Home/Exam/Exam_View.dart';
 import 'package:provider/provider.dart';
 
-import 'Categories/Categories_Model.dart';
-import 'Categories/Categories_View.dart';
+import '../Exam/FirstPage_View.dart';
 import 'Home_Model.dart';
-import 'New_Courses/Courses_View.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,8 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _key = GlobalKey<FormState>();
-  String courseCode = "";
-
+  TextEditingController courseCode = TextEditingController();
   late Future _future;
 
   Future<void> prepareData() async {
@@ -38,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var cours = Provider.of<HomeModel>(context);
     var categ = Provider.of<CategoriesModel>(context);
+    var exam = Provider.of<ExamModel>(context);
     return Scaffold(
       appBar: AppBar(
           title: Image.asset("images/homeLogo.png"),
@@ -79,12 +83,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Flexible(
                               child: TextFormField(
-                                onChanged: (val) {
-                                  courseCode = val;
-                                },
+                                controller: courseCode,
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "Feild is Required";
+                                  } else if (!RegExp(r"^[0-9]*$")
+                                      .hasMatch(courseCode.text)) {
+                                    return "يجب ان يكون ارقام فقط";
                                   }
                                   return null;
                                 },
@@ -106,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
-                                keyboardType: TextInputType.text,
+                                keyboardType: TextInputType.phone,
                               ),
                             ),
                             SizedBox(
@@ -114,8 +119,33 @@ class _HomeScreenState extends State<HomeScreen> {
                             CircleAvatar(
                               backgroundColor: const Color(0xFFFF6600),
                               child: IconButton(
-                                  onPressed: () {
-                                    if (_key.currentState!.validate()) {}
+                                  onPressed: () async {
+                                    if (_key.currentState!.validate()) {
+                                      FocusScope.of(context).unfocus();
+                                      exam.courseCode = courseCode.text;
+                                      await exam.getExam();
+
+                                      if (exam.status_getExam) {
+                                        Fluttertoast.showToast(
+                                          msg: exam.message_getExam,
+                                          fontSize: 15,
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          timeInSecForIosWeb: 10,
+                                        );
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    FirstExamScreen()));
+                                      } else {
+                                        Fluttertoast.showToast(
+                                          msg: exam.message_getExam,
+                                          fontSize: 15,
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          timeInSecForIosWeb: 10,
+                                        );
+                                      }
+                                    }
                                   },
                                   icon: const Icon(Icons.arrow_forward),
                                   color: Colors.white),

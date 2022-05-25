@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:odc/Screens/Home/Courses/CourseDetails/CourseDetails_Model.dart';
+import 'package:odc/Screens/Home/Courses/CourseDetails/CourseDetails_View.dart';
 import 'package:provider/provider.dart';
 
-import 'Categories/Categories_Model.dart';
-import 'Categories/allCategoriesDetails/allCatDetails_View.dart';
-import 'New_Courses/CourseDetails/CourseDetails_Model.dart';
-import 'New_Courses/CourseDetails/CourseDetails_View.dart';
+import '../Categories/Categories_Model.dart';
+import '../Categories/allCategoriesDetails/allCatDetails_View.dart';
 
 class CategoriesCard extends StatelessWidget {
   CategoriesCard({
@@ -24,12 +24,11 @@ class CategoriesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var getCat = Provider.of<CategoriesModel>(context);
     return InkWell(
-      onTap: ()async {
+      onTap: () async {
         getCat.catId = catId;
-         await getCat.getCategoriesDetails();
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AllCatDetails()));
-
+        await getCat.getCategoriesDetails();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AllCatDetails()));
       },
       child: Padding(
         padding: EdgeInsets.only(
@@ -93,12 +92,14 @@ class CoursesCards extends StatelessWidget {
     var cDetails = Provider.of<CourseDetailsModel>(context);
     return InkWell(
       onTap: () async {
-        cDetails.id = id;
+        cDetails.courseId = id;
         await cDetails.getCoursesDetails();
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => const CourseDetailsScreen()));
+                builder: (context) => CourseDetailsScreen(
+                      courseId: id,
+                    )));
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.52,

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:odc/Screens/Home/Home/NavBar_Screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Provider/userInformation.dart';
-import '../../Home/Home_View.dart';
 import '../SignUp/signUp_View.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -121,9 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                              vertical: h,
-                            ),
+                            contentPadding: EdgeInsets.symmetric(vertical: h,),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             prefixIcon: const SizedBox(),
@@ -205,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomeScreen()));
+                                        builder: (context) => Nav_Home()));
                               }
                               showSpinner = false;
                             }

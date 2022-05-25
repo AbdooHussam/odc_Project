@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:odc/Screens/Home/Home_View.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:odc/Screens/Home/Home/NavBar_Screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Screens/OnBoarding/on_boarding_screen.dart';
@@ -10,7 +11,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
-   String? access;
+  String? access;
 
   delay() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -22,7 +23,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
           ? Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const OnBoardingScreen()))
           : Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              context, MaterialPageRoute(builder: (context) => Nav_Home()));
     });
   }
 
@@ -39,8 +40,8 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       child: Scaffold(
         body: Container(
           child: Center(
-            child: Image.asset(
-              "images/Logo.png",
+            child: SvgPicture.asset(
+              "images/Logo.svg",
               fit: BoxFit.cover,
             ),
           ),
