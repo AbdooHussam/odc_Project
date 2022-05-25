@@ -9,8 +9,6 @@ import 'package:provider/provider.dart';
 class FirstExamScreen extends StatelessWidget {
   FirstExamScreen({Key? key}) : super(key: key);
 
-  bool showSpinner = false;
-
   @override
   Widget build(BuildContext context) {
     var getExam = Provider.of<ExamModel>(context);
@@ -94,8 +92,8 @@ class FirstExamScreen extends StatelessWidget {
                 SizedBox(height: MediaQuery.of(context).size.height * .06),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => const ExamScreen()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) =>  ExamScreen()));
                   },
                   child: const Text(
                     "Start",

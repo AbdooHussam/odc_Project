@@ -5,6 +5,11 @@ import 'package:provider/provider.dart';
 import '../Home/NavBar_Screen.dart';
 
 class NewCoursesScreen extends StatefulWidget {
+
+  const NewCoursesScreen({Key? key,this.appBar="New Courses"}) : super(key: key);
+
+  final String? appBar;
+
   @override
   _NewCoursesScreenState createState() => _NewCoursesScreenState();
 }
@@ -43,7 +48,7 @@ class _NewCoursesScreenState extends State<NewCoursesScreen> {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            title: const Text("New Courses",
+            title:  Text("${widget.appBar}",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,

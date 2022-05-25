@@ -96,7 +96,28 @@ class _ExamScreenState extends State<ExamScreen> {
                     ? (getExam.examCard.isEmpty)
                         ? const Center(child: CircularProgressIndicator())
                         : getExam.examCard[getExam.currentQuestion]
-                    : const Center(child: const Text("data")),
+                    : Center(
+                        child: ElevatedButton(
+                        onPressed: () {
+                          print(getExam.userAnswer);
+                          print(getExam.courseCode);
+                          getExam.submitExam();
+                        },
+                        child: Text(
+                          "Send Answers",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            elevation: 15,
+                            primary: Color(0xFFFF6600),
+                            minimumSize: Size(150, 43),
+                            // onPrimary: Colors.black,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      )),
               ],
             ),
           )),

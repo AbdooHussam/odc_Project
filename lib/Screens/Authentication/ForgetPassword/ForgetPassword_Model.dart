@@ -7,130 +7,114 @@ import 'package:odc/Screens/Home/Exam/Exam_Controller.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ExamModel extends ChangeNotifier {
+class ForgetPassModel extends ChangeNotifier {
   var apiUrl = UserInformation().apiUrl;
 
-  String? access_token, refresh_token;
+  String email = "", otp = "", pass = "";
+  bool status = false;
+  bool rest_status = false;
 
-  String courseName = "";
-
-  String courseCode = "";
-
-  String message_getExam = "";
-  late bool status_getExam;
-
-  List<questionCard> examCard = [];
-
-  List<String> userAnswer = [];
-
-  int currentQuestion = 0;
-  bool nextQ = true;
-
-  Object? radioValue = 0;
-
-  String message_subExam = "", subMark = "", subStatus = "";
-
-  nextQuestion() {
-    print("${currentQuestion +1}**********************");
-    print("${examCard.length}******************");
-    print("${userAnswer.length}******************#########");
-    if (currentQuestion +1 == examCard.length) {
-      nextQ = false;
-      radioValue = 0;
-      //submitExam();
-    } else {
-      currentQuestion++;
-      radioValue = 0;
-      nextQ = true;
-    }
-    notifyListeners();
-  }
-
-  getExam() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    access_token = prefs.getString("access_token")!;
-    String question_id,
-        question,
-        question_mark,
-        answer_1,
-        answer_2,
-        answer_3,
-        answer_4,
-        correct_answer,
-        exam_id;
-    int lenth = 0;
-
-    try {
-      http.Response response = await http.get(
-        Uri.parse("$apiUrl/exams/${int.parse(courseCode)}"),
-        headers: <String, String>{
-          'Authorization': 'Bearer $access_token',
-          'Content-Type': 'application/json; char=UTF-8',
-        },
-      );
-      var body = json.decode(response.body);
-
-      message_getExam = body['message'];
-      status_getExam = body['success'];
-
-      lenth = body['data'].length;
-      for (int i = 0; i < lenth; i++) {
-        question_id = body['data'][i]['id'].toString();
-        question = body['data'][i]['question'].toString();
-        question_mark = body['data'][i]["question_mark"].toString();
-        answer_1 = body['data'][i]["answer_1"].toString();
-        answer_2 = body['data'][i]["answer_2"].toString();
-        answer_3 = body['data'][i]["answer_3"].toString();
-        answer_4 = body['data'][i]["answer_4"].toString();
-        correct_answer = body['data'][i]["correct_answer"].toString();
-        exam_id = body['data'][i]["exam_id"].toString();
-
-        examCard.add(questionCard(
-          answer_1: answer_1,
-          answer_2: answer_2,
-          answer_3: answer_3,
-          answer_4: answer_4,
-          correct_answer: correct_answer,
-          question: question,
-          question_mark: question_mark,
-          exam_id: exam_id,
-          question_id: question_id,
-        ));
-      }
-      notifyListeners();
-    } catch (e) {
-      print("$e getCourses ***************");
-      // refreshToken();
-    }
-    notifyListeners();
-  }
-
-  submitExam() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    access_token = prefs.getString("access_token")!;
-
+  forgetPass() async {
     try {
       http.Response response = await http.post(
-        Uri.parse("$apiUrl/exams/${int.parse(courseCode)}/submit"),
+        Uri.parse("$apiUrl/forgetPassword"),
         headers: <String, String>{
-          'Authorization': 'Bearer $access_token',
           'Content-Type': 'application/json; char=UTF-8',
         },
         body: jsonEncode(
           {
-            'answers': userAnswer,
+            'email': email,
           },
         ),
       );
 
       var body = jsonDecode(response.body);
+      print(body);
 
-      message_subExam = body["message"];
-      subStatus = body["data"]["status"];
-      subMark = body["data"]["userMark"];
+      // message_subExam = body["message"];
+      status = body["success"];
+      // subMark = body["data"]["userMark"];
 
       Fluttertoast.showToast(
-        msg: message_subExam,
+        msg: body["message"],
+        fontSize: 15,
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 10,
+      );
+      print(body);
+      notifyListeners();
+
+      if (response.statusCode == 200) {
+        print('Success =200 login ********************');
+        print(body);
+      } else {
+        print('failed == 400 login ******************');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  verifyOtp() async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse("$apiUrl/verifyOtp"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; char=UTF-8',
+        },
+        body: jsonEncode(
+          {'email': email, 'otp': otp},
+        ),
+      );
+
+      var body = jsonDecode(response.body);
+      print(body);
+
+      // message_subExam = body["message"];
+      status = body["success"];
+      // subMark = body["data"]["userMark"];
+
+      Fluttertoast.showToast(
+        msg: body["message"],
+        fontSize: 15,
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 10,
+      );
+      print(body);
+      notifyListeners();
+
+      if (response.statusCode == 200) {
+        print('Success =200 login ********************');
+        print(body);
+      } else {
+        print('failed == 400 login ******************');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  resetPass() async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse("$apiUrl/resetPassword"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; char=UTF-8',
+        },
+        body: jsonEncode(
+          {'email': email, 'otp': otp, "password": pass},
+        ),
+      );
+
+      var body = jsonDecode(response.body);
+      print(body);
+
+      // message_subExam = body["message"];
+      rest_status = body["success"];
+      // subMark = body["data"]["userMark"];
+
+      Fluttertoast.showToast(
+        msg: body["message"],
         fontSize: 15,
         toastLength: Toast.LENGTH_SHORT,
         timeInSecForIosWeb: 10,

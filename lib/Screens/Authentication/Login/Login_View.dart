@@ -7,6 +7,7 @@ import 'package:odc/Screens/Home/Home/NavBar_Screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Provider/userInformation.dart';
+import '../ForgetPassword/ForgetPassword_View.dart';
 import '../SignUp/signUp_View.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -121,7 +122,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: h,),
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: h,
+                            ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             prefixIcon: const SizedBox(),
@@ -175,7 +178,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   decoration: TextDecoration.underline,
                                   fontWeight: FontWeight.w400),
                             ),
-                            onPressed: () {}),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ForgesPassScreen()));
+                            }),
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * .03),
@@ -200,10 +209,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               showSpinner = false;
 
                               if (api.status_reg == true) {
-                                Navigator.pushReplacement(
+                                Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Nav_Home()));
+                                        builder: (BuildContext context) =>
+                                            Nav_Home()),
+                                    ModalRoute.withName('/'));
                               }
                               showSpinner = false;
                             }

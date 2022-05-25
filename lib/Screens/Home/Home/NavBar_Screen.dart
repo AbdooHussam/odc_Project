@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:odc/Screens/Authentication/Login/Login_View.dart';
 import 'package:odc/Screens/Authentication/SignUp/signUp_View.dart';
+import 'package:odc/Screens/Home/Courses/Courses_View.dart';
 import 'package:odc/Screens/Home/Home/Home_View.dart';
+import 'package:odc/Screens/Home/MyProfile/Profile_View.dart';
 import 'package:provider/provider.dart';
 
 class Nav_Home extends StatefulWidget {
@@ -28,8 +30,8 @@ class _Nav_HomeState extends State<Nav_Home> {
   //
   final screens = [
     const HomeScreen(),
-    const LoginScreen(),
-    const SignUpScreen(),
+    const NewCoursesScreen(appBar: "My Courses"),
+     ProfileDetailsScreen(),
   ];
 
 
@@ -58,10 +60,10 @@ class _Nav_HomeState extends State<Nav_Home> {
           ],
           currentIndex: nav_index,
           onTap: _changeItem,
-          selectedItemColor: Color(0xFFFF6600),
-          selectedLabelStyle: TextStyle(
+          selectedItemColor: const Color(0xFFFF6600),
+          selectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.w900,fontSize: 10,
-            color: Color(0xFFFF6600),
+            color: const Color(0xFFFF6600),
           ),
           showUnselectedLabels: false,
         ),

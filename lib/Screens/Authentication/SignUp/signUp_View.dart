@@ -116,7 +116,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Feild is Required";
-                          } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          } else if (!RegExp(
+                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                               .hasMatch(email)) {
                             return "Email not Valid";
                           }
@@ -341,10 +342,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                                 if (api.status_reg == true &&
                                     _checked == true) {
-                                  Navigator.pushReplacement(
+                                  Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Nav_Home()));
+                                          builder: (BuildContext context) =>
+                                              Nav_Home()),
+                                      ModalRoute.withName('/'));
                                 }
                                 showSpinner = false;
                               }

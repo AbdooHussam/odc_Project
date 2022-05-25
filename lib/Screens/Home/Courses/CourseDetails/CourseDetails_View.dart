@@ -216,8 +216,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                                           await exam.getExam();
 
                                           if (exam.status_getExam) {
-                                            exam.courseName =
-                                                cDetails.course_name!;
+                                            // exam.courseName =
+                                            //     cDetails.course_name!;
                                             Fluttertoast.showToast(
                                               msg: exam.message_getExam,
                                               fontSize: 15,
