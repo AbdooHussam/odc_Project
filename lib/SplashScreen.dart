@@ -18,7 +18,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     // await prefs.remove("access_token");
     // await prefs.remove("refresh_token");
     access = prefs.getString("access_token");
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 3), () {
       (access == null)
           ? Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const OnBoardingScreen()))
